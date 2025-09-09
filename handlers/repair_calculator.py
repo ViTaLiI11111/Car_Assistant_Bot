@@ -6,7 +6,6 @@ from .common import start
 
 REPAIR_PHOTO = 1
 
-
 async def repair_start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     await update.message.reply_text(
         "Будь ласка, надішліть 1 або 2 фото вашого авто для попередньої оцінки вартості ремонту.",

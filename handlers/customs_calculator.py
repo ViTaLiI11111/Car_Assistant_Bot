@@ -8,7 +8,6 @@ logger = logging.getLogger(__name__)
 
 (ASK_PRICE, ASK_ENGINE, ASK_AGE) = range(2, 5)
 
-
 async def customs_start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     await update.message.reply_text(
         "Розпочнемо розрахунок.\n"
