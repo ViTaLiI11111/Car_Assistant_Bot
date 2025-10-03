@@ -40,10 +40,6 @@ PROMPT = """
 
 
 def analyze_car_damage(image_bytes: bytes) -> dict | None:
-    """
-    :param image_bytes: Зображення у вигляді байтів.
-    :return: Словник з результатом аналізу або None у разі помилки.
-    """
     try:
         model = genai.GenerativeModel(MODEL_NAME)
 

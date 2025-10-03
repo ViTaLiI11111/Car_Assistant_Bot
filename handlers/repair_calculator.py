@@ -11,7 +11,6 @@ logger = logging.getLogger(__name__)
 REPAIR_PHOTO = 1
 
 async def repair_start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Запускає процес розрахунку вартості ремонту."""
     await update.message.reply_text(
         "Будь ласка, надішліть фото вашого авто для попередньої оцінки вартості ремонту.",
         reply_markup=ReplyKeyboardRemove(),
@@ -24,7 +23,6 @@ async def repair_photo_received(update: Update, context: ContextTypes.DEFAULT_TY
     try:
         photo_file = await update.message.photo[-1].get_file()
 
-        # Завантажуємо фото в пам'ять у вигляді байтів
         photo_bytes = await photo_file.download_as_bytearray()
 
         analysis_result = analyze_car_damage(image_bytes=bytes(photo_bytes))

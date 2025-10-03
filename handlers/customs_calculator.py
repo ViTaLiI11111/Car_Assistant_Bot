@@ -21,6 +21,14 @@ async def customs_start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
 async def ask_price(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     try:
         price = float(update.message.text.strip())
+        if price < 0:
+            await update.message.reply_text(
+                f"❗️Помилка: Ціна автомобіля не може бути менша нуля.\n"
+                f"Будь ласка, введіть коректну ціну ще раз."
+            )
+            return ASK_PRICE
+
+
         context.user_data['price'] = price
         await update.message.reply_text("Тепер введіть об'єм двигуна (в кубічних сантиметрах, наприклад, 1998):")
         return ASK_ENGINE

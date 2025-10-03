@@ -22,3 +22,9 @@ async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         reply_markup=ReplyKeyboardRemove(),
     )
     return ConversationHandler.END
+
+async def handle_unsupported_messages(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    await update.message.reply_text(
+        "Вибачте, я не обробляю голосові повідомлення чи відео-кружечки. "
+        "Будь ласка, використовуйте текстові команди або надсилайте фото."
+    )
