@@ -4,12 +4,13 @@ from telegram.ext import (
     CommandHandler,
     ConversationHandler,
     MessageHandler,
+    CallbackQueryHandler,
     filters,
 )
 
 from config import BOT_TOKEN
 
-from handlers.common import start, cancel, CHOOSING, handle_unsupported_messages
+from handlers.common import start, cancel, CHOOSING, handle_unsupported_messages, contact_manager
 from handlers.repair_calculator import repair_start, repair_photo_received, REPAIR_PHOTO
 from handlers.customs_calculator import (
     customs_start,
@@ -20,6 +21,8 @@ from handlers.customs_calculator import (
     ASK_ENGINE,
     ASK_AGE,
 )
+from handlers.catalog import show_history, history_page_callback
+from services.database import initialize_db
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
@@ -28,6 +31,8 @@ logger = logging.getLogger(__name__)
 
 
 def main() -> None:
+    initialize_db()
+
     application = Application.builder().token(BOT_TOKEN).build()
 
     unsupported_filter = filters.VOICE | filters.VIDEO_NOTE
@@ -38,6 +43,8 @@ def main() -> None:
             CHOOSING: [
                 MessageHandler(filters.Regex("^Розрахунок вартості ремонту$"), repair_start),
                 MessageHandler(filters.Regex("^Калькулятор розмитнення$"), customs_start),
+                MessageHandler(filters.Regex("^💬 Зв'язатися з менеджером$"), contact_manager),
+                MessageHandler(filters.Regex("^📂 Моя історія$"), show_history),
                 MessageHandler(unsupported_filter, handle_unsupported_messages),
             ],
             REPAIR_PHOTO: [
@@ -61,6 +68,8 @@ def main() -> None:
     )
 
     application.add_handler(conv_handler)
+
+    application.add_handler(CallbackQueryHandler(history_page_callback, pattern=r"^history_"))
 
     application.run_polling()
 

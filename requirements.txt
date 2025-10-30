@@ -1,4 +1,6 @@
-python-telegram-bot
+python-telegram-bot[ext]
+psycopg2-binary
 python-dotenv
 google-generativeai
-pillow
+Pillow
+httpx

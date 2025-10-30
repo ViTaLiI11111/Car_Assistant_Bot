@@ -10,3 +10,5 @@ if not BOT_TOKEN:
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 if not GOOGLE_API_KEY:
     raise ValueError("Не знайдено GOOGLE_API_KEY. Перевірте ваш .env файл.")
+
+MANAGER_USERNAME = os.getenv("MANAGER_USERNAME", "default_manager_username")
